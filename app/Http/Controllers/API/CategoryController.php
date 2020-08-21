@@ -24,19 +24,20 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:200',
-            'parent_id' => 'nullable|integer|min:0',
+            'parent_id' => ['required', 'regex:/^(null|\d+)$/'],
             'external_id' => 'required|string|max:200',
         ]);
 
         if ($validator->fails()) {
-            return response()->json_fail('Invalid arguments', [$validator->errors()]);
+            return response()->json_fail('Invalid arguments');
         }
 
         $category->name = $request->name;
-        $category->parent_id = $request->parent_id ?? 'NULL';
+        $category->parent_id = ($request->parent_id == 'null') ? null : $request->parent_id;
         $category->external_id = $request->external_id;
 
         // TODO: Предотвращение циклических ссылок через parent_id.
+        // Родительская категория может отсутствовать!
 
         $category->save();
 

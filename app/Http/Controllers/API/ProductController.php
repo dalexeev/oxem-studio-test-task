@@ -42,7 +42,8 @@ class ProductController extends Controller
 
         $product->save();
 
-        $product->categories()->attach(explode(',', $request->categories));
+        $categories = ($request->categories == 'null') ? [] : explode(',', $request->categories);
+        $product->categories()->sync($categories);
         $product->save();
 
         return response()->json_success($with_id ? ['id' => $product->id] : []);
@@ -136,6 +137,8 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json_fail('Product not found');
         }
+
+        //$product->categories()->sync([]); // Должно обеспечиваться БД!
 
         $product->delete();
 
