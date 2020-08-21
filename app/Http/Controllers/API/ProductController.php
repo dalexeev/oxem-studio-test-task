@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Product as ProductResource;
+use App\Http\Resources\ProductCollection;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -40,6 +42,9 @@ class ProductController extends Controller
 
         $product->save();
 
+        $product->categories()->attach(explode(',', $request->categories));
+        $product->save();
+
         return response()->json_success($with_id ? ['id' => $product->id] : []);
     }
 
@@ -67,7 +72,7 @@ class ProductController extends Controller
 
         $products = Product::orderBy($order_by, $order)->offset($offset)->limit(50)->get();
 
-        return response()->json_success(['products' => $products]);
+        return response()->json_success(['products' => new ProductCollection($products)]);
     }
 
     /**
@@ -97,7 +102,7 @@ class ProductController extends Controller
             return response()->json_fail('Product not found');
         }
 
-        return response()->json_success(['product' => $product]);
+        return response()->json_success(['product' => new ProductResource($product)]);
     }
 
     /**

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Category as CategoryResource;
+use App\Http\Resources\CategoryCollection;
+use App\Http\Resources\ProductCollection;
 use App\Category;
-use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +36,7 @@ class CategoryController extends Controller
         $category->parent_id = $request->parent_id ?? 'NULL';
         $category->external_id = $request->external_id;
 
-        // TODO: Предотвращение циклических ссылок.
+        // TODO: Предотвращение циклических ссылок через parent_id.
 
         $category->save();
 
@@ -48,7 +50,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json_success(['categories' => Category::all()]);
+        return response()->json_success(['categories' => new CategoryCollection(Category::all())]);
     }
 
     /**
@@ -65,14 +67,25 @@ class CategoryController extends Controller
     }
 
     /**
-     * Возвращает список товаров в категории.
+     * Возвращает список всех товаров в категории.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        ////////////////// см. Product. ///////////////////
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json_fail('Category not found');
+        }
+
+        $products = $category->products;
+
+        return response()->json_success([
+            'category' => new CategoryResource($category),
+            'products' => new ProductCollection($products),
+        ]);
     }
 
     /**
@@ -84,7 +97,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Product::find($id);
+        $category = Category::find($id);
 
         if (!$category) {
             return response()->json_fail('Category not found');

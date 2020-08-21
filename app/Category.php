@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'categories';
-
-    /**
-     * Indicates if the model should be timestamped.
+     * Указывает, что метки времени не нужны.
      *
      * @var bool
      */
     public $timestamps = false;
 
+    /**
+     * Продукты данной категории.
+     */
+    public function products()
+    {
+        return $this->belongsToMany('App\Product');
+    }
 }
