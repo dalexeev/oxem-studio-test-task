@@ -14,18 +14,14 @@ class JSONMacrosServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('json_fail', function ($err) {
+        Response::macro('json_fail', function ($err, $arr = []) {
             return response()->json(
-                ['success' => false, 'error' => $err],
+                array_merge(['success' => false, 'error' => $err], $arr),
                 200, [], JSON_UNESCAPED_UNICODE
             );
         });
 
-        Response::macro('json_success', function ($arr) {
-            if (!$arr) {
-                $arr = [];
-            }
-
+        Response::macro('json_success', function ($arr = []) {
             return response()->json(
                 array_merge(['success' => true], $arr),
                 200, [], JSON_UNESCAPED_UNICODE

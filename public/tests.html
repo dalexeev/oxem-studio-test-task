@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TESTS</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<a href="/welcome" target="_blank">welcome</a> ⬥
+<a href="/login" target="_blank">login</a> ⬥
+<a href="/register" target="_blank">register</a>
+<h1>TESTS</h1>
+<h2>products:</h2>
+<a href="/api/products/" target="_blank">GET /api/products/</a> - Список товаров<br />
+<a href="/api/products/?page=1&amp;order_by=created_at&amp;order=asc" target="_blank">GET /api/products/?page=1&amp;order_by=created_at&amp;order=asc</a><br />
+<a href="/api/products/?page=2&amp;order_by=price&amp;order=desc" target="_blank">GET /api/products/?page=2&amp;order_by=price&amp;order=desc</a><br />
+<br />
+<a href="test_add_product.html" target="_blank">POST /api/products/</a> - Создание товара<br />
+<a href="/api/products/1/" target="_blank">GET /api/products/{id}/</a> - Получение конкретного товара<br />
+<a href="test_edit_product.html" target="_blank">PUT /api/products/{id}/</a> - Редактирование товара<br />
+<a href="test_delete_product.html" target="_blank">DELETE /api/products/{id}/</a> - Удаление товара<br />
+<h2>categories:</h2>
+<a href="/api/categories/" target="_blank">GET /api/categories/</a> - Список всех категорий<br />
+<a href="test_add_category.html" target="_blank">POST /api/categories/</a> - Создание категории<br />
+<a href="/api/categories/1/" target="_blank">GET /api/categories/{id}/</a> - Все товары в конкретной категории<br />
+<a href="test_edit_category.html" target="_blank">PUT /api/categories/{id}/</a> - Редактирование категории<br />
+<a href="test_delete_category.html" target="_blank">DELETE /api/categories/{id}/</a> - Удаление категории<br />
+</body>
+</html>

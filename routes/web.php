@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::redirect('/', '/tests.html');
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 

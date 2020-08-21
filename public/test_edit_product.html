@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PUT /api/products/{id}/</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<h1>PUT /api/products/{id}/</h1>
+id: <input type="text" id="id" value="1" size="2" /><br />
+<br />
+name:<br />
+<input type="text" id="_name" value="Стиралочка «Русалочка»" /><br />
+description:<br />
+<input type="text" id="description" value="Царство Нептуна!" /><br />
+price:<br />
+<input type="text" id="price" value="5999.00" /><br />
+balance:<br />
+<input type="text" id="balance" value="7" /><br />
+external_id:<br />
+<input type="text" id="external_id" value="СТИРМАШ-РУСАЛКА-5429" /><br />
+categories:<br />
+<input type="text" id="categories" value="1,2" /><br />
+<br />
+<button id="button">Отправить</button>
+<script>
+button.onclick = function() {
+	var json = JSON.stringify({
+		name: _name.value,
+		description: description.value,
+		price: price.value,
+		balance: balance.value,
+		external_id: external_id.value,
+		categories: categories.value,
+	});
+	var xhr = new XMLHttpRequest();
+	xhr.onload = function() {alert(xhr.response);};
+	xhr.open('PUT', `/api/products/${id.value}/`);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(json);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DELETE /api/categories/{id}/</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<h1>DELETE /api/categories/{id}/</h1>
+id: <input type="text" id="id" value="1" size="2" /><br />
+<br />
+<button id="button">Отправить</button>
+<script>
+button.onclick = function() {
+	var xhr = new XMLHttpRequest();
+	xhr.onload = function() {alert(xhr.response);};
+	xhr.open('DELETE', `/api/categories/${id.value}/`);
+	xhr.send();
+}
+</script>
+</body>
+</html>

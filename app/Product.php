@@ -8,7 +8,6 @@ class Product extends Model
 {
     protected $with = ['categories'];
 
-
     public function categories()
     {
         return $this->belongsToMany('App\Category');

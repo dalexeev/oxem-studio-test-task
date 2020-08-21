@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PUT /api/categories/{id}/</title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<h1>PUT /api/categories/{id}/</h1>
+id: <input type="text" id="id" value="1" size="2" /><br />
+<br />
+name:<br />
+<input type="text" id="_name" value="Техника для сантехника" /><br />
+parent_id:<br />
+<input type="text" id="parent_id" value="" /><br />
+external_id:<br />
+<input type="text" id="external_id" value="КАТ-ТЕХ-САНТЕХ-1" /><br />
+<br />
+<button id="button">Отправить</button>
+<script>
+button.onclick = function() {
+	var json = JSON.stringify({
+		name: _name.value,
+		parent_id: parent_id.value,
+		external_id: external_id.value,
+	});
+	var xhr = new XMLHttpRequest();
+	xhr.onload = function() {alert(xhr.response);};
+	xhr.open('PUT', `/api/categories/${id.value}/`);
+	xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+	xhr.send(json);
+}
+</script>
+</body>
+</html>
